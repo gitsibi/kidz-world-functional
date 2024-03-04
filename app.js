@@ -140,3 +140,40 @@ cartButton.onclick = () => {
     "The total amount is " + finalDollars + "$ and " + finalCents + " cents"
   );
 };
+
+cartButton.onclick = () => {
+  updatePrice();
+
+  let orderDetails = "";
+
+  for (let index = 0; index < items.length; index++) {
+    if (items[index].quantity != 0) {
+      // If the item quantity is not zero, add it to the order details
+      orderDetails +=
+        "Item name: " +
+        items[index].name +
+        " - Quantity: " +
+        items[index].quantity +
+        "\n";
+    }
+  }
+
+  // Construct the message with order details and total amount
+  let message =
+    "Order Details:\n" +
+    orderDetails +
+    "Total Amount: " +
+    finalDollars +
+    "$ and " +
+    finalCents +
+    " cents";
+
+  // Encode the message for WhatsApp URL
+  let encodedMessage = encodeURIComponent(message);
+
+  // WhatsApp URL with the encoded message
+  let whatsappURL = "https://api.whatsapp.com/send?text=" + encodedMessage;
+
+  // Open the WhatsApp URL in a new tab
+  window.open(whatsappURL, "_blank");
+};
